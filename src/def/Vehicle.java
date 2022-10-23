@@ -1,6 +1,8 @@
 package def;
 
 import java.io.Serializable;
+import java.text.DecimalFormat;
+import java.text.DecimalFormatSymbols;
 
 public abstract class Vehicle implements Serializable {
 	
@@ -12,11 +14,11 @@ public abstract class Vehicle implements Serializable {
 	private String model;
 	private int yearBuild;
 	private double basePrice;
-	private long id;
+	private int id;
 	
 	public static final int thisYear = 2022;
 	
-	public Vehicle(String brand, String model, int yearBuild, double basePrice, long id) {
+	public Vehicle(String brand, String model, int yearBuild, double basePrice, int id) {
 		if(brand.isEmpty() || model.isEmpty())
 			throw new IllegalArgumentException("Error: Invalid parameter.");
 		this.brand = brand;
@@ -46,5 +48,15 @@ public abstract class Vehicle implements Serializable {
 		return basePrice - getDiscount();
 	}
 	
+	public int getId() {
+		return this.id;
+	}
+	
 	public abstract double getDiscount();
+	
+	public static DecimalFormat getDecimalFormat() {
+		DecimalFormatSymbols d = DecimalFormatSymbols.getInstance();
+		d.setDecimalSeparator('.');
+		return new DecimalFormat("0.00", d);
+	}
 }

@@ -7,7 +7,7 @@ public class Truck extends Vehicle {
 	 */
 	private static final long serialVersionUID = 1L;
 
-	public Truck(String brand, String model, int yearBuild, double basePrice, long id) {
+	public Truck(String brand, String model, int yearBuild, double basePrice, int id) {
 		super(brand, model, yearBuild, basePrice, id);
 	}
 

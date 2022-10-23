@@ -13,7 +13,7 @@ public class Car extends Vehicle {
 //		// TODO Auto-generated constructor stub
 //	}
 
-	public Car(String brand, String model, int yearBuild, double basePrice, long id, int yearOfLastInspection) {
+	public Car(String brand, String model, int yearBuild, double basePrice, int id, int yearOfLastInspection) {
 		super(brand, model, yearBuild, basePrice, id);
 		if(yearOfLastInspection > thisYear || yearOfLastInspection < yearBuild)
 			throw new IllegalArgumentException("Error: Inspection year invalid.");
