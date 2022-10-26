@@ -1,4 +1,4 @@
-package def;
+
 
 import java.io.File;
 import java.io.FileInputStream;
@@ -15,16 +15,16 @@ public class SerializedVehicleDAO implements VehicleDAO {
 	public SerializedVehicleDAO(String fileName) {
 		this.fileName = fileName;
 	}
-
-	@SuppressWarnings("unchecked")
+	
 	@Override
+	@SuppressWarnings("unchecked")
 	public List<Vehicle> getVehicleList() {
 		List<Vehicle> vehicles = new ArrayList<>();
 		try {
 			ObjectInputStream reader = new ObjectInputStream(new FileInputStream(fileName)); //reader -> deserialization
 			Object obj = reader.readObject();
 
-			if (obj instanceof Vehicle) {
+			if (!(obj instanceof ArrayList)) {
 				vehicles.add((Vehicle) obj);
 			} else {
 				vehicles = (List<Vehicle>) obj;
@@ -56,6 +56,7 @@ public class SerializedVehicleDAO implements VehicleDAO {
 
 			if (file.exists()) {
 				saved = this.getVehicleList();
+				
 				for (Vehicle v : saved) {
 					if (v.getId() == vehicle.getId())
 						throw new IllegalArgumentException(
@@ -63,7 +64,7 @@ public class SerializedVehicleDAO implements VehicleDAO {
 				}
 
 				saved.add(vehicle);
-				file.delete(); // old file, but not sure
+				file.delete(); // old file
 			} else 
 				saved.add(vehicle);
 			ObjectOutputStream writer = new ObjectOutputStream(new FileOutputStream(fileName, true));
@@ -72,7 +73,6 @@ public class SerializedVehicleDAO implements VehicleDAO {
 			
 		} catch (IllegalArgumentException e) {
 			System.out.println(e.getMessage());
-			System.exit(1);
 		}
 		catch(Exception e) {
 			System.err.println("Error during serialization: " + e.getMessage());
